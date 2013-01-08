@@ -1,0 +1,20 @@
+#!/bin/bash
+
+flags='--mirror http://mirrors.163.com/cygwin --cache /packages'
+
+if [[ $# -ge 1 ]]; then
+    case $1 in
+	autoclean) 
+	    apt-cyg-clean.py -v /packages
+	    exit 0 ;;
+	clean)
+	    rm -rf /packages/*
+	    exit 0 ;;
+    esac
+fi
+
+if [[ $# > 1 && $1 != 'update' ]]; then
+    flags+=' --noupdate'
+fi
+
+apt-cyg $flags $@
